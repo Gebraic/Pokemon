@@ -1,65 +1,88 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getPokemonDetail } from "../services/getPokemonDetail";
-import { Box, Card, CircularProgress, Container, Slide } from "@mui/material";
+import { Box, Card, CircularProgress, Container, Slide, Typography, IconButton } from "@mui/material";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import "react-lazy-load-image-component/src/effects/blur.css";
+import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
 
 export default function DetailPokemon() {
     const [pokemon, setPokemon] = useState(null);
     const [loading, setLoading] = useState(true);
-
+    const [currentSpriteIndex, setCurrentSpriteIndex] = useState(0);
+    
     const { id } = useParams();
-
-    useEffect(() => {
-        const fetchPokemon = async () => {
-            setLoading(true);
-            try {
-                const data = await getPokemonDetail(id);
-                console.log("data: ", data);
+    
+    const fetchPokemon = async () => {
+        setLoading(true);
+        try {
+            const data = await getPokemonDetail(id);
+            if (data && data.name) {
                 setPokemon(data);
-            } catch (error) {
-                throw new Error('DetailPokemon - Data Error');
             }
+        } catch (error) {
+            throw new Error('DetailPokemon - Data Error');
         }
+        setLoading(false);
+    };
+    
+    useEffect(() => {
         fetchPokemon();
-    }, [id])
+    }, [id]);
+    
+    if (loading) return <CircularProgress />;
+    
+    const spriteKeys = pokemon.sprites ? Object.keys(pokemon.sprites).filter(key => typeof pokemon.sprites[key] === "string") : [];
 
+    const handleNextSprite = () => {
+        setCurrentSpriteIndex((prevIndex) => (prevIndex + 1) % spriteKeys.length);
+    };
 
+    const handlePrevSprite = () => {
+        setCurrentSpriteIndex((prevIndex) => (prevIndex - 1 + spriteKeys.length) % spriteKeys.length);
+    };
+    
     return (
-        loading ? <CircularProgress/> : (
+        <Container>
+            <Typography variant="h1">{pokemon.name}</Typography>
             <Container>
-                <Container>
-                    <Container>
-                        <Card>
-
-                        </Card>
-                        <Slide>
-
-                        </Slide>
-                    </Container>
-                    <Container>
-                        <Card>
-                            <Typography variant="h3">PokeDex ID: {pokemon.id}</Typography>
-                            <Typography variant="h3">Height: {pokemon.height}</Typography>
-                            <Typography variant="h3">Weight: {pokemon.weight}</Typography>
-                        </Card>
-                        <Box>
-                            {pokemon.moves && pokemon.moves.length > 0 ? (
-                                pokemon.moves.map((move) => {
-                                    <Box component="section" sx={{ p: 2, border: '1px dashed grey' }}>
-                                        {mov.move.name}
-                                    </Box>
-                                })
-                            ) : 
-                            (
-                                <Box component="section" sx={{ p: 2, border: '1px dashed grey' }}>
-                                    Tidak ada Data
-                                </Box>
-                            )
-                            }
-                        </Box>
-                    </Container>
-                </Container>
+                <Card>
+                    <LazyLoadImage src={pokemon.officialArtwork} alt={pokemon.name} effect="blur" />
+                </Card>
+                <Slide in={true} direction="up">
+                    <Box display="flex" alignItems="center" justifyContent="center" mt={2}>
+                        <IconButton onClick={handlePrevSprite}><ArrowBackIos /></IconButton>
+                        {spriteKeys.length > 0 && (
+                            <LazyLoadImage 
+                                src={pokemon.sprites[spriteKeys[currentSpriteIndex]]} 
+                                alt={`${pokemon.name} sprite`} 
+                                effect="blur" 
+                            />
+                        )}
+                        <IconButton onClick={handleNextSprite}><ArrowForwardIos /></IconButton>
+                    </Box>
+                </Slide>
             </Container>
-        )
-    )
+            <Container>
+                <Card>
+                    <Typography variant="h3">PokeDex ID: {pokemon.id}</Typography>
+                    <Typography variant="h3">Height: {pokemon.height}</Typography>
+                    <Typography variant="h3">Weight: {pokemon.weight}</Typography>
+                </Card>
+                <Slide in={true} direction="up">
+                    <Box sx={{ maxHeight: 200, overflowY: "auto", border: "1px solid grey", p: 2, mt: 2 }}>
+                        {pokemon.moves && pokemon.moves.length > 0 ? (
+                            pokemon.moves.map((move, index) => (
+                                <Box key={index} component="section" sx={{ p: 1, borderBottom: '1px solid grey' }}>
+                                    {move.move.name}
+                                </Box>
+                            ))
+                        ) : (
+                            <Typography>Tidak ada Data</Typography>
+                        )}
+                    </Box>
+                </Slide>
+            </Container>
+        </Container>
+    );
 }

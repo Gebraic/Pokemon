@@ -1,7 +1,8 @@
-import { Button, Card, CircularProgress, Container, Grid, Grid2, Pagination, Typography } from "@mui/material";
+import { Button, Card, CircularProgress, Container, Grid, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { getPokemon } from "../services/getPokemon";
 import { LazyLoadImage } from "react-lazy-load-image-component";
+import "react-lazy-load-image-component/src/effects/blur.css";
 import { Link } from "react-router-dom";
 
 export default function PokemonList() {
@@ -71,6 +72,7 @@ export default function PokemonList() {
                                     src={detail.officialArtwork ? detail.officialArtwork : "No Data"}
                                     effect="blur"
                                     alt={detail.name}
+                                    placeholderSrc="/placeholder.png"
                                     style={{ width: "100%", height: "150px", objectFit: "contain" }}
                                 />
 

@@ -48,10 +48,30 @@
     font-weight: bold;
     padding: 10px 0;
     background-color: #ffcb05;
-    border-radius: 0 0 20px 20px;
+    border-radius: 0 0 10px 10px;
     text-align: center;
+    display: block;
 }
 
 .PokemonListLink .MuiTypography-root:hover {
-    background-color: #f4a900;
+    background-color: #FFE69D;
+}
+
+.PokemonListButton button {
+    margin: 30px;
+    background-color: #28445D;
+    color: #EFE9D5;
+    font-weight: bold;
+    transition: background 0.2s ease-in-out;
+}
+
+.PokemonListButton button:hover {
+    background-color: #EFE9D5;
+    color: #28445D;
+}
+
+.PokemonListButton button:disabled {
+    background-color: #d3d3d3;
+    color: #a0a0a0;
+    cursor: not-allowed;
 }

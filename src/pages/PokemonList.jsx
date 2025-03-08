@@ -4,7 +4,7 @@ import { getPokemon } from "../services/getPokemon";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import { Link } from "react-router-dom";
-import '../css/PokemonList.css';
+import '../css/PokemonLIst.css';
 
 export default function PokemonList() {
     const [ pokemon, setPokemon ] = useState([])
@@ -84,7 +84,7 @@ export default function PokemonList() {
                             ))}
                         </Grid>
                     </div>
-                    <Container sx={{ gap: 2, display: "flex", justifyContent: "center" }}>
+                    <Container sx={{ gap: 2, display: "flex", justifyContent: "center" }} className="PokemonListButton">
                         <Button variant="contained" disabled={!prev} onClick={handlePrev}>Prev</Button>
                         <Button variant="contained" disabled={!next} onClick={handleNext}>Next</Button>
                     </Container>

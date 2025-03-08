@@ -4,6 +4,7 @@ import { getPokemon } from "../services/getPokemon";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import { Link } from "react-router-dom";
+import '../css/PokemonList.css';
 
 export default function PokemonList() {
     const [ pokemon, setPokemon ] = useState([])
@@ -43,64 +44,62 @@ export default function PokemonList() {
     }
 
     return (
-        loading ? (<CircularProgress />) : (
         <div className="PokemonListContainer">
-            <div className="PokemonListHeading">
-                
-            </div>
-            <div className="PokemonListBody">
-                <Grid container spacing={5} justifyContent="center">
-                    {pokemon.map((detail) => (
-                        <Grid item xs={12} sm={6} md={4} lg={3} key={detail.name}>
-                            <Card
-                                variant="outlined"
+            { loading ? (<CircularProgress />) : (
+                <>
+                    <div className="PokemonListHeading">
+                    <Typography variant="h1" 
+                    sx={{
+                        color: "#ffcb05",
+                        textShadow: "2px 2px #3b4cca",
+                        fontWeight: "bold",
+                        fontSize: "3.5rem",
+                    }}>
+                        Pokemon List
+                    </Typography>
+                    </div>
+                    <div className="PokemonListBody">
+                        <Grid container spacing={4} justifyContent="center">
+                            {pokemon.map((detail) => (
+                                <Grid item xs={12} sm={6} md={4} lg={3} key={detail.name}
                                 sx={{
-                                    width: 200,
-                                    height: 250,
-                                    display: "flex",
-                                    flexDirection: "column",
                                     alignItems: "center",
-                                    justifyContent: "center",
-                                    borderRadius: 2,
-                                    boxShadow: 2,
-                                    backgroundColor: "white",
-                                    padding: 1,
-                                    margin: "auto",
+                                    justifyItems: "center"
                                 }}>
-                                
-                                <LazyLoadImage
-                                    src={detail.officialArtwork ? detail.officialArtwork : "No Data"}
-                                    effect="blur"
-                                    alt={detail.name}
-                                    placeholderSrc="/placeholder.png"
-                                    style={{ width: "100%", height: "150px", objectFit: "contain" }}
-                                />
-
-                            </Card>
-                            <Link to={`/pokemon/${detail.id}`} style={{ textDecoration: "none" }}>
-                                <Typography
-                                    variant="h6"
-                                    color="white"
-                                    sx={{
-                                        backgroundColor: "black",
-                                        width: "100%",
-                                        textAlign: "center",
-                                        padding: 1,
-                                        borderRadius: "0 0 8px 8px",
-                                    }}
-                                >
-                                    {detail.name.toUpperCase()}
-                                </Typography>
-                            </Link>
+                                    <Card variant="outlined" className="PokemonListCard">
+                                        <LazyLoadImage
+                                            src={detail.officialArtwork || "/placeholder.png"}
+                                            effect="blur"
+                                            alt={detail.name}
+                                            placeholderSrc="/placeholder.png"
+                                            className="PokemonListImage"
+                                        />
+                                    </Card>
+                                    <Link to={`/pokemon/${detail.id}`} className="PokemonListLink">
+                                        <Typography
+                                            variant="h6"
+                                            color="white"
+                                            sx={{
+                                                backgroundColor: "black",
+                                                width: "100%",
+                                                textAlign: "center",
+                                                padding: 1,
+                                                borderRadius: "0 0 8px 8px",
+                                            }}
+                                        >
+                                            {detail.name.toUpperCase()}
+                                        </Typography>
+                                    </Link>
+                                </Grid>
+                            ))}
                         </Grid>
-                    ))}
-                </Grid>
-            </div>
-            <Container sx={{ gap: 2, display: "flex", justifyContent: "center" }}>
-                <Button variant="contained" disabled={!prev} onClick={handlePrev}>Prev</Button>
-                <Button variant="contained" disabled={!next} onClick={handleNext}>Next</Button>
-            </Container>
+                    </div>
+                    <Container sx={{ gap: 2, display: "flex", justifyContent: "center" }}>
+                        <Button variant="contained" disabled={!prev} onClick={handlePrev}>Prev</Button>
+                        <Button variant="contained" disabled={!next} onClick={handleNext}>Next</Button>
+                    </Container>
+                </>
+            )}
         </div>
-        )
-    )
+    );
 }

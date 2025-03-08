@@ -76,17 +76,7 @@ export default function PokemonList() {
                                         />
                                     </Card>
                                     <Link to={`/pokemon/${detail.id}`} className="PokemonListLink">
-                                        <Typography
-                                            variant="h6"
-                                            color="white"
-                                            sx={{
-                                                backgroundColor: "black",
-                                                width: "100%",
-                                                textAlign: "center",
-                                                padding: 1,
-                                                borderRadius: "0 0 8px 8px",
-                                            }}
-                                        >
+                                        <Typography variant="h6">
                                             {detail.name.toUpperCase()}
                                         </Typography>
                                     </Link>

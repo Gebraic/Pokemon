@@ -44,9 +44,9 @@ export default function DetailPokemon() {
     };
     
     return (
-        <div className="PokemonDetailConainer">
+        <div className="PokemonDetailContainer">
             <Typography variant="h1">{pokemon.name}</Typography>
-            <Container className="PokemonDetailBody">
+            <Card className="PokemonDetailBody">
                 <Container className="PokemonDetailLeft">
                     <Card className="PokemonDetailImage">
                         <LazyLoadImage src={pokemon.officialArtwork} alt={pokemon.name} effect="blur" />
@@ -88,7 +88,7 @@ export default function DetailPokemon() {
                         </Slide>
                     </Card>
                 </Container>
-            </Container>
+            </Card>
         </div>
     );
 }

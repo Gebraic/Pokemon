@@ -49,7 +49,12 @@ export default function DetailPokemon() {
             <Card className="PokemonDetailBody">
                 <Container className="PokemonDetailLeft">
                     <Card className="PokemonDetailImage">
-                        <LazyLoadImage src={pokemon.officialArtwork} alt={pokemon.name} effect="blur" />
+                        <LazyLoadImage 
+                        className="OfficialImage" 
+                        src={pokemon.officialArtwork} 
+                        alt={pokemon.name} 
+                        effect="blur" 
+                        />
                     </Card>
                     <Slide in={true} direction="up" className="PokemonDetailSprites">
                         <Box display="flex" alignItems="center" justifyContent="center" mt={2}>
@@ -58,7 +63,7 @@ export default function DetailPokemon() {
                                 <LazyLoadImage 
                                     src={pokemon.sprites[spriteKeys[currentSpriteIndex]]} 
                                     alt={`${pokemon.name} sprite`} 
-                                    effect="blur" 
+                                    effect="blur"
                                 />
                             )}
                             <IconButton onClick={handleNextSprite}><ArrowForwardIos /></IconButton>

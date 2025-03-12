@@ -1,8 +1,8 @@
 import { fetchPokemon } from "../utils/Api"
 
-export const getPokemon = async (url = 'https://pokeapi.co/api/v2/pokemon') => {
+export const getPokemon = async (page) => {
     try { 
-        const pokemons = await fetchPokemon(url);
+        const pokemons = await fetchPokemon(page);
         if (!pokemons || !pokemons.results) {
             throw new Error ("getPokemon - Data Kosong");
         }

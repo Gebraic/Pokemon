@@ -1,5 +1,7 @@
-export const fetchPokemon = async (url = 'https://pokeapi.co/api/v2/pokemon') => {
-    const response = await fetch(url);
+export const fetchPokemon = async (page) => {
+    const baseUrl = 'https://pokeapi.co/api/v2/pokemon';
+    const offset = (page - 1) * 20;
+    const response = await fetch(`${baseUrl}?offset=${offset}&limit=20`);
     console.log("API - response: ", response);
     if (!response.ok) {
         throw new Error('API - Gagal Mengambil Data!');

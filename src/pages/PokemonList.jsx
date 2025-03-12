@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { getPokemon } from "../services/getPokemon";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useSearchParams } from "react-router-dom";
 import '../css/PokemonList.css';
 
 export default function PokemonList() {
@@ -12,11 +12,13 @@ export default function PokemonList() {
     const [ next, setNext ] = useState(null);
     const [ prev, setPrev ] = useState(null);
 
-    const fetchData = async (url) => {
-        setLoading(true);
+    const [searchParams, setSearchParams] = useSearchParams();
+    const page = Number(searchParams.get('page')) || 1;
 
+    const fetchData = async (page) => {
+        setLoading(true);
         try {
-            const data = await getPokemon(url);
+            const data = await getPokemon(page);
             if (data && data.results) {
                 setPokemon(data.results);
                 setNext(data.next);
@@ -31,16 +33,16 @@ export default function PokemonList() {
     };
     
     useEffect(() => {
-        fetchData();
-    }, []);
+        fetchData(page);
+    }, [page]);
 
     
     const handleNext = () => {
-        if (next) fetchData(next);
+        setSearchParams({ page: page + 1 });
     }
     
     const handlePrev = () => {
-        if (prev) fetchData(prev);
+        if (page > 1) setSearchParams({ page: page - 1 });
     }
 
     return (

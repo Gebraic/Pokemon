@@ -47,7 +47,7 @@ export default function DetailPokemon() {
         <>
         <div className= "bg-blue-400 min-h-screen w-screen text-center flex flex-col items-center justify-center p-3">
             <Typography variant="h1" className="text-gray-900 mb-2">{pokemon.name.toUpperCase()}</Typography>
-            <div className="bg-amber-200 max-w-[85%] max-h-[75%] h-full w-full p-4 rounded-lg shadow-lg flex flex-col md:flex-row gap-4">
+            <div className="bg-amber-200 max-w-[60%] max-h-[75%] h-full w-full p-4 rounded-lg shadow-lg flex flex-col md:flex-row gap-4">
                     <div item className="flex-1 flex flex-col items-center justify-center">
                         <Card className="p-4 rounded-lg shadow-md">
                             <LazyLoadImage 

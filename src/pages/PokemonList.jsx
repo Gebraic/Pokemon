@@ -21,8 +21,8 @@ export default function PokemonList() {
             const data = await getPokemon(page);
             if (data && data.results) {
                 setPokemon(data.results);
-                setNext(data.next);
-                setPrev(data.prev);
+                // setNext(data.next);
+                // setPrev(data.prev);
             } else {
                 console.error("PokemonList - Data tidak Valid");
             }

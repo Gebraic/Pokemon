@@ -65,7 +65,8 @@ export default function DetailPokemon() {
                                         src={pokemon.sprites[spriteKeys[currentSpriteIndex]]} 
                                         alt={`${pokemon.name} sprite`} 
                                         effect="blur"
-                                        className="max-h-[200px] max-w-[auto] h-full w-full"
+                                        className="min-h-[150px] max-w-[auto] h-full w-auto"
+
                                     />
                                 )}
                                 <IconButton onClick={handleNextSprite}><ArrowForwardIos /></IconButton>

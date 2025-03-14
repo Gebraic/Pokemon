@@ -20,7 +20,7 @@ export const getPokemon = async (page) => {
         return {
             results: pokemonList,
             next: pokemons.next,
-            prev: pokemons.previous,
+            prev: pokemons.previous
         };
     } catch (error) {
         throw new Error("getPokemon - error");
